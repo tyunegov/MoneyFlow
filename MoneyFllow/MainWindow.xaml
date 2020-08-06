@@ -1,0 +1,64 @@
+﻿<Window x:Class="MoneyFllow.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MoneyFllow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>        
+        <Grid>            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock>Фильтр</TextBlock>
+                <ComboBox IsEditable="True" SelectedIndex="1">
+                    <TextBlock>Доход</TextBlock>
+                    <TextBlock>Расход</TextBlock>
+                    <TextBlock>Перевод</TextBlock>
+                </ComboBox>
+                <TextBlock>
+                    <Hyperlink>По дате</Hyperlink>
+                </TextBlock>
+            </StackPanel>
+            <Grid Grid.Column="1" Margin="15 0 0 15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>            
+                <StackPanel Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Width="70" Content="Удалить" Command="{Binding DeleteTransaction, UpdateSourceTrigger=PropertyChanged}"></Button>
+                </StackPanel>
+                <DataGrid Grid.Row="1" x:Name="phonesGrid" AutoGenerateColumns="False" ItemsSource="{Binding Transaction}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="90"/>
+                        <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="90" />
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="80" />
+                        <DataGridTextColumn Header="Сумма" Binding="{Binding Summ}" Width="50" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Grid Grid.Column="2">
+            <StackPanel>
+                <Calendar SelectedDate="{Binding Path=CurrentTransaction.Date, UpdateSourceTrigger=PropertyChanged}"></Calendar>
+                <TextBlock Text="Тип операции"></TextBlock>
+                <ComboBox IsEditable="True" SelectedIndex="1">
+                    <TextBlock>Доход</TextBlock>
+                    <TextBlock>Расход</TextBlock>
+                    <TextBlock>Перевод</TextBlock>
+                </ComboBox>
+                <TextBlock Text="Категория"></TextBlock>
+                <TextBox Name="TextBoxFirstName" Height="24" Margin="0 0 0 0"
+                         Text="{Binding Path=CurrentTransaction.Category, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                <TextBlock Text="Сумма"></TextBlock>
+                <TextBox Name="TextBoxLastName" Height="24" Margin="0 0 0 0"
+                         Text="{Binding Path=CurrentTransaction.Summ, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                <Button Height="24" Command="{Binding AddTransaction, UpdateSourceTrigger=PropertyChanged}" Content="Добавить"></Button>
+            </StackPanel>
+        </Grid>
+        </Grid>
+    </Grid>
+</Window>
