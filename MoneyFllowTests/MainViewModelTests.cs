@@ -43,5 +43,33 @@ namespace MoneyFllow.Tests
             main.ExecuteAddTransactionCommand();
             _transactionRepository.VerifyAll();
         }
+
+        [TestMethod()]
+        public void CanExecuteDeleteTransactionCommand_ReturnFalse()
+        {
+            MainViewModel main = new MainViewModel();
+            main.SelectedTransaction = null;
+            bool result = main.CanExecuteDeleteTransactionCommand();
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod()]
+        public void CanExecuteDeleteTransactionCommand_ReturnTrue()
+        {
+            MainViewModel main = new MainViewModel();
+            main.SelectedTransaction = new Transaction();
+            bool result = main.CanExecuteDeleteTransactionCommand();
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void ExecuteDeleteTransactionCommand()
+        {
+            Mock<ITransactionRepository> _transactionRepository = new Mock<ITransactionRepository>();
+            MainViewModel main = new MainViewModel(_transactionRepository.Object);
+            _transactionRepository.Setup(x => x.Delete(It.IsAny<Transaction>()));
+            main.ExecuteDeleteTransactionCommand();
+            _transactionRepository.VerifyAll();
+        }
     }
 }
