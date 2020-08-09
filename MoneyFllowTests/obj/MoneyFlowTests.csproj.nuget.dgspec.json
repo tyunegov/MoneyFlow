@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFllowTests.csproj": {}
+    "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFlowTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFllowTests.csproj": {
+    "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFlowTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFllowTests.csproj",
-        "projectName": "MoneyFllowTests",
-        "projectPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFllowTests.csproj",
+        "projectUniqueName": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFlowTests.csproj",
+        "projectName": "MoneyFlowTests",
+        "projectPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\MoneyFlowTests.csproj",
         "packagesPath": "C:\\Users\\Disp\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowTests\\obj\\",
         "projectStyle": "PackageReference",
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFllow.csproj": {
-                "projectPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFllow.csproj"
+              "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFlow.csproj": {
+                "projectPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFlow.csproj"
               }
             }
           }
@@ -56,10 +56,6 @@
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.2.0, )"
-            },
-            "Moq": {
-              "target": "Package",
-              "version": "[4.14.5, )"
             },
             "coverlet.collector": {
               "target": "Package",
@@ -88,12 +84,12 @@
         }
       }
     },
-    "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFllow.csproj": {
+    "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFllow.csproj",
-        "projectName": "MoneyFllow",
-        "projectPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFllow.csproj",
+        "projectUniqueName": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFlow.csproj",
+        "projectName": "MoneyFlow",
+        "projectPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\MoneyFlow.csproj",
         "packagesPath": "C:\\Users\\Disp\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllow\\obj\\",
         "projectStyle": "PackageReference",
