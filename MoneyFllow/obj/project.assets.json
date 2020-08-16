@@ -19,6 +19,16 @@
           "lib/net45/GalaSoft.MvvmLight.dll": {},
           "lib/net45/System.Windows.Interactivity.dll": {}
         }
+      },
+      "MoneyFllowControlLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/MoneyFllowControlLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MoneyFllowControlLibrary.dll": {}
+        }
       }
     }
   },
@@ -154,10 +164,16 @@
         "mvvmlightlibs.5.4.1.1.nupkg.sha512",
         "mvvmlightlibs.nuspec"
       ]
+    },
+    "MoneyFllowControlLibrary/1.0.0": {
+      "type": "project",
+      "path": "../MoneyFllowControlLibrary/MoneyFllowControlLibrary.csproj",
+      "msbuildProject": "../MoneyFllowControlLibrary/MoneyFllowControlLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "MoneyFllowControlLibrary >= 1.0.0",
       "MvvmLight >= 5.4.1.1",
       "MvvmLightLibs >= 5.4.1.1"
     ]
@@ -191,7 +207,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowControlLibrary\\MoneyFllowControlLibrary.csproj": {
+              "projectPath": "C:\\Users\\Disp\\source\\repos\\MoneyFllow\\MoneyFllowControlLibrary\\MoneyFllowControlLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

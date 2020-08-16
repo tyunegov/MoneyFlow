@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MoneyFllowControlLibrary.Model;
+using System;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace MoneyFllow.Model
 {
-     public class TransactionRepository:ITransactionRepository
+    public class TransactionRepository:ITransactionRepository
     {
         ObservableCollection<Transaction> _transaction;
-        public ObservableCollection<Transaction> AllTransaction()
+        public ObservableCollection<Transaction> GetAll()
         {
                 if (_transaction == null)
                     _transaction = GenerateTransactionRepository();
@@ -57,12 +56,12 @@ namespace MoneyFllow.Model
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Transaction> Filter(int selectedFilter)
+        public ObservableCollection<Transaction> Filter(TypeTransaction selectedFilterType)
         {
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Transaction> Sort(int selectedSort)
+        public ObservableCollection<Transaction> Sort(SortTransaction selectedSort)
         {
             throw new NotImplementedException();
         }

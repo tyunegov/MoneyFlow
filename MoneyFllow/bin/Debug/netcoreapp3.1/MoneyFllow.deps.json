@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "MoneyFllow/1.0.0": {
         "dependencies": {
+          "MoneyFllowControlLibrary": "1.0.0",
           "MvvmLight": "5.4.1.1",
           "MvvmLightLibs": "5.4.1.1"
         },
@@ -35,6 +36,11 @@
             "fileVersion": "3.0.40218.0"
           }
         }
+      },
+      "MoneyFllowControlLibrary/1.0.0": {
+        "runtime": {
+          "MoneyFllowControlLibrary.dll": {}
+        }
       }
     }
   },
@@ -57,6 +63,11 @@
       "sha512": "sha512-xYpVzOYnIz/M6T0pdc3w5t0vrt2ZKspSS+CZjQ+pZE+5yHv9qXSWkncHJXb6D7Egstalso4ivnIUkA1xEClViw==",
       "path": "mvvmlightlibs/5.4.1.1",
       "hashPath": "mvvmlightlibs.5.4.1.1.nupkg.sha512"
+    },
+    "MoneyFllowControlLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

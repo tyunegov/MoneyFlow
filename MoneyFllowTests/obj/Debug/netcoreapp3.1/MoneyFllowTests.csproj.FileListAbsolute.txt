@@ -99,3 +99,5 @@ C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowTests\obj\Debug\netcoreapp3.1\Mo
 C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowTests\obj\Debug\netcoreapp3.1\MoneyFllowTests.pdb
 C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowTests\bin\Debug\netcoreapp3.1\Castle.Core.dll
 C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowTests\bin\Debug\netcoreapp3.1\Moq.dll
+C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowTests\bin\Debug\netcoreapp3.1\MoneyFllowControlLibrary.dll
+C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowTests\bin\Debug\netcoreapp3.1\MoneyFllowControlLibrary.pdb

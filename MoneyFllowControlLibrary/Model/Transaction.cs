@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MoneyFllow.Model
+namespace MoneyFllowControlLibrary.Model
 {
     public class Transaction
     {

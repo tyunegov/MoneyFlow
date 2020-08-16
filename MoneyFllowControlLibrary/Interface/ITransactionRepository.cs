@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
-namespace MoneyFllow.Model
+namespace MoneyFllowControlLibrary.Model
 {
     public interface ITransactionRepository
     {
         void Add(Transaction currentTransaction);
         void Delete(Transaction currentTransaction);
-        public ObservableCollection<Transaction> AllTransaction();
-        ObservableCollection<Transaction> Filter(int selectedFilter);
-        ObservableCollection<Transaction> Sort(int selectedSort);
+        public ObservableCollection<Transaction> GetAll();
+        ObservableCollection<Transaction> Filter(TypeTransaction selectedFilterType);
+        ObservableCollection<Transaction> Sort(SortTransaction selectedSort);
     }
 }

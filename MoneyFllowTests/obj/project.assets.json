@@ -2080,6 +2080,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "MoneyFllowControlLibrary": "1.0.0",
           "MvvmLight": "5.4.1.1",
           "MvvmLightLibs": "5.4.1.1"
         },
@@ -2092,6 +2093,16 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WPF"
         ]
+      },
+      "MoneyFllowControlLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/MoneyFllowControlLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MoneyFllowControlLibrary.dll": {}
+        }
       }
     }
   },
@@ -7043,6 +7054,11 @@
       "type": "project",
       "path": "../MoneyFllow/MoneyFllow.csproj",
       "msbuildProject": "../MoneyFllow/MoneyFllow.csproj"
+    },
+    "MoneyFllowControlLibrary/1.0.0": {
+      "type": "project",
+      "path": "../MoneyFllowControlLibrary/MoneyFllowControlLibrary.csproj",
+      "msbuildProject": "../MoneyFllowControlLibrary/MoneyFllowControlLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {

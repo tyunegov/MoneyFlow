@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyFllow", "MoneyFllow\MoneyFllow.csproj", "{0853318A-787F-4426-ADF1-C88AE6B154DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyFllowTests", "MoneyFllowTests\MoneyFllowTests.csproj", "{CEBEBCCB-5B16-4143-9615-37B84F783E08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyFllowTests", "MoneyFllowTests\MoneyFllowTests.csproj", "{CEBEBCCB-5B16-4143-9615-37B84F783E08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyFllowControlLibrary", "MoneyFllowControlLibrary\MoneyFllowControlLibrary.csproj", "{712E3918-A6A4-4122-9762-092D08A4D0A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CEBEBCCB-5B16-4143-9615-37B84F783E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEBEBCCB-5B16-4143-9615-37B84F783E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEBEBCCB-5B16-4143-9615-37B84F783E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712E3918-A6A4-4122-9762-092D08A4D0A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712E3918-A6A4-4122-9762-092D08A4D0A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712E3918-A6A4-4122-9762-092D08A4D0A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712E3918-A6A4-4122-9762-092D08A4D0A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

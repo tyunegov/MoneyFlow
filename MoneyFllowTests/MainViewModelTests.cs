@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MoneyFllow.Model;
+using MoneyFllowControlLibrary.Model;
 using Moq;
 using System;
 
@@ -11,6 +11,7 @@ namespace MoneyFllow.Tests
         [DataTestMethod]
         [DataRow("", 1)]
         [DataRow("test", 0)]
+        [DataRow("", 0)]
         public void CanExecuteAddTransactionCommand_ReturnFalse(string category, int summ)
         {
             Transaction transaction = new Transaction()
@@ -69,6 +70,29 @@ namespace MoneyFllow.Tests
             MainViewModel main = new MainViewModel(_transactionRepository.Object);
             _transactionRepository.Setup(x => x.Delete(It.IsAny<Transaction>()));
             main.ExecuteDeleteTransactionCommand();
+            _transactionRepository.VerifyAll();
+        }
+
+
+        [TestMethod()]
+        public void CanExecuteFilterTransactionCommand_ReturnTrue()
+        {
+            MainViewModel main = new MainViewModel();
+
+            bool result = main.CanExecuteFilterTransactionCommand();
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void ExecuteFilterTransactionCommand_SelectedSortAndFilter()
+        {
+            Mock<ITransactionRepository> _transactionRepository = new Mock<ITransactionRepository>();
+            MainViewModel main = new MainViewModel(_transactionRepository.Object);
+
+            _transactionRepository.Setup(x => x.Sort(It.IsAny<SortTransaction>()));
+            _transactionRepository.Setup(x => x.Filter(It.IsAny<TypeTransaction>()));
+
+            main.ExecuteFilterTransactionCommand();
             _transactionRepository.VerifyAll();
         }
     }
