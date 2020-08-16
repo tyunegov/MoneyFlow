@@ -25,10 +25,5 @@ namespace MoneyFllow
             InitializeComponent();
             DataContext = new MainViewModel();
         }
-
-        private void phonesGrid_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
-        {
-
-        }
     }
 }
