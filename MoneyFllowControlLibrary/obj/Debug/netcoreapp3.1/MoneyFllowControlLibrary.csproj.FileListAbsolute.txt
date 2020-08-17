@@ -5,4 +5,3 @@ C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowControlLibrary\bin\Debug\netcore
 C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowControlLibrary\bin\Debug\netcoreapp3.1\MoneyFllowControlLibrary.pdb
 C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowControlLibrary\obj\Debug\netcoreapp3.1\MoneyFllowControlLibrary.dll
 C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowControlLibrary\obj\Debug\netcoreapp3.1\MoneyFllowControlLibrary.pdb
-C:\Users\Disp\source\repos\MoneyFllow\MoneyFllowControlLibrary\obj\Debug\netcoreapp3.1\MoneyFllowControlLibrary.csprojAssemblyReference.cache

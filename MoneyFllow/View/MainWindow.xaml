@@ -15,10 +15,12 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="5,5,5,0">
                 <TextBlock>Сортировать</TextBlock>
-                <ComboBox IsEditable="True" ItemsSource="{Binding Sort}" SelectedIndex="{Binding SelectedSort, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock>Вид операции</TextBlock>
-                <ComboBox IsEditable="True" SelectedIndex="0" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
-                <Button Command="{Binding ApplyFilterCommand, UpdateSourceTrigger=PropertyChanged}" Content="Применить"></Button>
+                <ComboBox IsEditable="True" ItemsSource="{Binding Sort}" SelectedItem="{Binding SelectedSort, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+                <TextBlock>Тип операции</TextBlock>
+                <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+                <Button Command="{Binding ApplyFilterCommand, UpdateSourceTrigger=PropertyChanged}" Content="Применить" Cursor="Hand"></Button>
             </StackPanel>
             <Grid Grid.Column="1" Margin="5">
                 <Grid.RowDefinitions>
@@ -26,9 +28,6 @@
                     <RowDefinition Height="168*"></RowDefinition>
                     <RowDefinition Height="233*"/>
                 </Grid.RowDefinitions>
-                <!--<StackPanel Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Width="70" Content="Удалить" Command="{Binding DeleteTransaction, UpdateSourceTrigger=PropertyChanged}"></Button>
-                </StackPanel>-->
                 <DataGrid IsReadOnly="True" Height="Auto" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedTransaction, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="90"/>
@@ -42,10 +41,16 @@
                 <StackPanel>
                     <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" SelectedDate="{Binding Path=NewTransaction.Date, UpdateSourceTrigger=PropertyChanged}"></Calendar>
                     <TextBlock Text="Тип операции"></TextBlock>
-                    <ComboBox IsEditable="True" ItemsSource="{Binding Types}"></ComboBox>
-                    <TextBlock Text="Категория"></TextBlock>
-                    <TextBox Name="TextBoxFirstName"
-                         Text="{Binding Path=NewTransaction.Category, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                    <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding NewTransaction.Type, UpdateSourceTrigger=PropertyChanged}">
+                    </ComboBox>
+                    <TextBlock>Категория</TextBlock>
+                    <ComboBox IsEditable="True" ItemsSource="{Binding Categoties}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}"></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                     <TextBlock Text="Сумма"></TextBlock>
                     <TextBox Name="TextBoxLastName"
                          Text="{Binding Path=NewTransaction.Summ, UpdateSourceTrigger=PropertyChanged}" ></TextBox>

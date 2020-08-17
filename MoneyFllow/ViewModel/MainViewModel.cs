@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MoneyFllow.Model;
+using MoneyFllowControlLibrary.Controller;
 using MoneyFllowControlLibrary.Interface;
 using MoneyFllowControlLibrary.Model;
 using System.Collections.Generic;
@@ -13,14 +14,16 @@ namespace MoneyFllow
 {
     class MainViewModel:ViewModelBase
     {
-        public ITransactionRepository transactionRepository;
-        public ITypeTransactionRepository typeTransaction;
-        public ISortTransaction sortTransaction;
-        Transaction newTransaction, selectedTransaction;
+        ITransactionRepository transactionRepository;
+        ITypeTransactionRepository typeTransaction;
+        ICategoryRepository categoryRepository;
+        ISortTransaction sortTransaction;
+        TransactionModel newTransaction, selectedTransaction;
         RelayCommand addCommand, deleteCommand, filterCommand;
-        ObservableCollection<Transaction> transactions;
-        SortTransaction selectedSort;
-        TypeTransaction selectedFilterType;
+        ObservableCollection<TransactionModel> transactions;
+        TypeModel selectedFilterType;
+        string selectedSort;
+
         public List<string> Sort 
         {
             get
@@ -29,7 +32,7 @@ namespace MoneyFllow
             }
         }
 
-        public ObservableCollection<string> Types
+        public ObservableCollection<TypeModel> Types
         {
             get
             {
@@ -37,15 +40,52 @@ namespace MoneyFllow
             }
         }
 
-        public SortTransaction SelectedSort { get => selectedSort; set => selectedSort = value; }
-        public TypeTransaction SelectedFilterType { get => selectedFilterType; set => selectedFilterType = value; }
+        public ObservableCollection<CategoryModel> Categories
+        {
+            get
+            {
+                return categoryRepository.GetByType(newTransaction.Type);
+            }
+        }
+
+        public TypeModel SelectedFilterType
+        {
+            get
+            {
+                if (filterCommand != null)
+                    filterCommand.RaiseCanExecuteChanged();
+                return selectedFilterType;
+            }
+            set
+            {
+                selectedFilterType = value;
+                RaisePropertyChanged("SelectedFilterType");
+            }
+        }
+
+        public string SelectedSort
+        {
+            get
+            {
+                if (filterCommand != null)
+                    filterCommand.RaiseCanExecuteChanged();
+                return selectedSort;
+            }
+            set
+            {
+                selectedSort = value;
+                RaisePropertyChanged("SelectedSort");
+            }
+        }
 
         public MainViewModel()
         {
-            newTransaction = new Transaction();
+            newTransaction = new TransactionModel();
+            selectedFilterType = new TypeModel() { Title="123"};
+            categoryRepository = new CategoryRepository();
             transactionRepository = new TransactionRepository();
-            typeTransaction = new TypeTransaction();
-            sortTransaction = new SortTransaction();
+            typeTransaction = new TypeRepository();
+            sortTransaction = new SortRepository();
             deleteCommand = new RelayCommand(ExecuteDeleteTransactionCommand, CanExecuteDeleteTransactionCommand);
         }
 
@@ -54,7 +94,7 @@ namespace MoneyFllow
             transactionRepository = transaction;
         }
 
-        public Transaction NewTransaction 
+        public TransactionModel NewTransaction 
         {
             get
             {
@@ -68,7 +108,7 @@ namespace MoneyFllow
                 RaisePropertyChanged("NewTransaction");
         }}
 
-        public ObservableCollection<Transaction> Transactions
+        public ObservableCollection<TransactionModel> Transactions
         {
             get 
             {
@@ -81,7 +121,7 @@ namespace MoneyFllow
             }
         }
 
-        public Transaction SelectedTransaction
+        public TransactionModel SelectedTransaction
         {
             get 
             {
@@ -89,7 +129,7 @@ namespace MoneyFllow
             }
             set
             {
-                selectedTransaction = new Transaction();
+                selectedTransaction = new TransactionModel();
                 selectedTransaction = value;
                 deleteCommand.RaiseCanExecuteChanged();
             }
@@ -127,12 +167,15 @@ namespace MoneyFllow
         internal void ExecuteFilterTransactionCommand()
         {
             Transactions = transactionRepository.Filter(SelectedFilterType);
-            Transactions = transactionRepository.Sort(SelectedSort);
+            Transactions = transactionRepository.Sort(selectedSort);
         }
 
         internal bool CanExecuteFilterTransactionCommand()
         {
-            return true;
+            return (
+                !string.IsNullOrEmpty(selectedSort)
+                || selectedFilterType!=null
+                );
         }
 
         internal bool CanExecuteDeleteTransactionCommand()
@@ -146,9 +189,10 @@ namespace MoneyFllow
         }
                 
         internal bool CanExecuteAddTransactionCommand()
-        {            
+        {
             return !(
-                string.IsNullOrEmpty(newTransaction.Category)
+                newTransaction.Type==null
+                || newTransaction.Category==null
                 || newTransaction.Summ == 0
                 );
         }
@@ -156,7 +200,7 @@ namespace MoneyFllow
         internal void ExecuteAddTransactionCommand()
         {
             transactionRepository.Add(newTransaction);
-            NewTransaction = new Transaction();
+            NewTransaction = new TransactionModel();
         }
     }
 }

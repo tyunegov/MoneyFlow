@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MoneyFllowControlLibrary.Model
 {
-    public class SortTransaction : ISortTransaction
+    public class SortRepository : ISortTransaction
     {
         public List<string> GetAll()
         {

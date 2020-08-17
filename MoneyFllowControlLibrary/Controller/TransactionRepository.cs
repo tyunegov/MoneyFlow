@@ -6,62 +6,37 @@ namespace MoneyFllow.Model
 {
     public class TransactionRepository:ITransactionRepository
     {
-        ObservableCollection<Transaction> _transaction;
-        public ObservableCollection<Transaction> GetAll()
+        ObservableCollection<TransactionModel> _transaction;
+        public ObservableCollection<TransactionModel> GetAll()
         {
                 if (_transaction == null)
                     _transaction = GenerateTransactionRepository();
                 return _transaction;            
         }
 
-        private static ObservableCollection<Transaction> GenerateTransactionRepository()
+        private static ObservableCollection<TransactionModel> GenerateTransactionRepository()
         {
-            var Transactions = new ObservableCollection<Transaction>();
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Продукты", "", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), "Что-то жизненно важное", "А хз, не придумал", 400));
+            var Transactions = new ObservableCollection<TransactionModel>();
+            Transactions.Add(new TransactionModel(new DateTime(2020, 01, 30), new TypeModel() {Title="123" },new CategoryModel() {Title="Продукты" },"Description", 400));
             return Transactions;
         }
 
-        public void Add(Transaction currentTransaction)
+        public void Add(TransactionModel currentTransaction)
         {
              throw new NotImplementedException();
         }
 
-        public void Delete(Transaction currentTransaction)
+        public void Delete(TransactionModel currentTransaction)
         {
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Transaction> Filter(TypeTransaction selectedFilterType)
+        public ObservableCollection<TransactionModel> Filter(TypeModel selectedFilterType)
         {
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Transaction> Sort(SortTransaction selectedSort)
+        public ObservableCollection<TransactionModel> Sort(string selectedSort)
         {
             throw new NotImplementedException();
         }
