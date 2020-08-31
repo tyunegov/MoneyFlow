@@ -21,9 +21,9 @@
                 <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
                 <TextBlock>Дата начала</TextBlock>
-                <DatePicker IsDropDownOpen="False" SelectedDateFormat="Short" CalendarStyle="{Binding CalendarCalendarItemStyle1}"/>
+                <DatePicker IsDropDownOpen="False" SelectedDateFormat="Short"/>
                 <TextBlock>Дата окончания</TextBlock>
-                <DatePicker IsDropDownOpen="False" SelectedDateFormat="Short" CalendarStyle="{Binding CalendarCalendarItemStyle1}"/>
+                <DatePicker IsDropDownOpen="False" SelectedDateFormat="Short"/>
                 <Button Command="{Binding ApplyFilterCommand, UpdateSourceTrigger=PropertyChanged}" Content="Применить" Cursor="Hand"></Button>
             </StackPanel>
             <Grid Grid.Column="1" Margin="5">
@@ -44,7 +44,7 @@
             </Grid>
             <Grid Grid.Column="2" Margin="5">
                 <StackPanel>
-                    <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" SelectedDate="{Binding Path=NewTransaction.Date, UpdateSourceTrigger=PropertyChanged}"></Calendar>
+                    <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}"  SelectedDate="{Binding Path=NewTransaction.Date, UpdateSourceTrigger=PropertyChanged}"></Calendar>
                     <TextBlock Text="Тип операции"></TextBlock>
                     <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding NewTransaction.Type, UpdateSourceTrigger=PropertyChanged}">
                     </ComboBox>

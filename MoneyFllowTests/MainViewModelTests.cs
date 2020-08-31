@@ -11,17 +11,17 @@ namespace MoneyFllow.Tests
     {
         public static IEnumerable<object[]> GetDataAddTransaction()
         {
-            yield return new object[] {null, new CategoryModel(), 100m };
-            yield return new object[] {new TypeModel(), null, 123m };
-            yield return new object[] { new TypeModel(), new CategoryModel(), 0m};
+            yield return new object[] {null, new Category(), 100m };
+            yield return new object[] {new MoneyFllowControlLibrary.Model.Type(), null, 123m };
+            yield return new object[] { new MoneyFllowControlLibrary.Model.Type(), new Category(), 0m};
             yield return new object[] {null, null, 0m };
         }
 
         [DataTestMethod]
         [DynamicData(nameof(GetDataAddTransaction), DynamicDataSourceType.Method)]
-        public void CanExecuteAddTransactionCommand_ReturnFalse(TypeModel type, CategoryModel category, decimal summ)
+        public void CanExecuteAddTransactionCommand_ReturnFalse(MoneyFllowControlLibrary.Model.Type type, Category category, decimal summ)
         {
-            TransactionModel transaction = new TransactionModel()
+            Transaction transaction = new Transaction()
             {
                 Type = type,
                 Category = category,
@@ -36,10 +36,10 @@ namespace MoneyFllow.Tests
         [TestMethod()]
         public void CanExecuteAddTransactionCommand_ReturnTrue()
         {
-            TransactionModel transaction = new TransactionModel()
+            Transaction transaction = new Transaction()
             {
-                Type = new TypeModel(),
-                Category = new CategoryModel()
+                Type = new MoneyFllowControlLibrary.Model.Type(),
+                Category = new Category()
                 {
                     Title = "test",
                 },
@@ -56,7 +56,7 @@ namespace MoneyFllow.Tests
         {
             Mock<ITransactionRepository> _transactionRepository = new Mock<ITransactionRepository>();
             MainViewModel main = new MainViewModel(_transactionRepository.Object);
-            _transactionRepository.Setup(x=>x.Add(It.IsAny<TransactionModel>()));
+            _transactionRepository.Setup(x=>x.Add(It.IsAny<Transaction>()));
             main.ExecuteAddTransactionCommand();
             _transactionRepository.VerifyAll();
         }
@@ -74,7 +74,7 @@ namespace MoneyFllow.Tests
         public void CanExecuteDeleteTransactionCommand_ReturnTrue()
         {
             MainViewModel main = new MainViewModel();
-            main.SelectedTransaction = new TransactionModel();
+            main.SelectedTransaction = new Transaction();
             bool result = main.CanExecuteDeleteTransactionCommand();
             Assert.IsTrue(result);
         }
@@ -84,7 +84,7 @@ namespace MoneyFllow.Tests
         {
             Mock<ITransactionRepository> _transactionRepository = new Mock<ITransactionRepository>();
             MainViewModel main = new MainViewModel(_transactionRepository.Object);
-            _transactionRepository.Setup(x => x.Delete(It.IsAny<TransactionModel>()));
+            _transactionRepository.Setup(x => x.Delete(It.IsAny<Transaction>()));
             main.ExecuteDeleteTransactionCommand();
             _transactionRepository.VerifyAll();
         }
@@ -93,14 +93,14 @@ namespace MoneyFllow.Tests
         public static IEnumerable<object[]> GetDataFilterTransaction()
         {
             yield return new object[] {"123", null };
-            yield return new object[] {"", new TypeModel() };
-            yield return new object[] { "123", new TypeModel() };
+            yield return new object[] {"", new MoneyFllowControlLibrary.Model.Type() };
+            yield return new object[] { "123", new MoneyFllowControlLibrary.Model.Type() };
 
         }
 
         [DataTestMethod]
         [DynamicData(nameof(GetDataFilterTransaction), DynamicDataSourceType.Method)]
-        public void CanExecuteFilterTransactionCommand_ReturnTrue(string sort, TypeModel type)
+        public void CanExecuteFilterTransactionCommand_ReturnTrue(string sort, MoneyFllowControlLibrary.Model.Type type)
         {
             MainViewModel main = new MainViewModel();
             main.SelectedSort = sort;
@@ -117,7 +117,7 @@ namespace MoneyFllow.Tests
             MainViewModel main = new MainViewModel(_transactionRepository.Object);
 
             _transactionRepository.Setup(x => x.Sort(It.IsAny<string>()));
-            _transactionRepository.Setup(x => x.Filter(It.IsAny<TypeModel>()));
+            _transactionRepository.Setup(x => x.Filter(It.IsAny<MoneyFllowControlLibrary.Model.Type>()));
 
             main.ExecuteFilterTransactionCommand();
             _transactionRepository.VerifyAll();

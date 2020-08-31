@@ -8,7 +8,7 @@ namespace MoneyFllowControlLibrary.Interface
 {
     public interface ICategoryRepository
     {
-        ObservableCollection<CategoryModel> GetAll();
-        ObservableCollection<CategoryModel> GetByType(TypeModel selectedType);
+        ObservableCollection<Category> GetAll();
+        ObservableCollection<Category> GetByType(Model.Type selectedType);
     }
 }

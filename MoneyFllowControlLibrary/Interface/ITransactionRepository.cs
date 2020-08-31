@@ -7,10 +7,10 @@ namespace MoneyFllowControlLibrary.Model
 {
     public interface ITransactionRepository
     {
-        void Add(TransactionModel currentTransaction);
-        void Delete(TransactionModel currentTransaction);
-        public ObservableCollection<TransactionModel> GetAll();
-        ObservableCollection<TransactionModel> Filter(TypeModel selectedFilterType);
-        ObservableCollection<TransactionModel> Sort(string selectedSort);
+        void Add(Transaction currentTransaction);
+        void Delete(Transaction currentTransaction);
+        public ObservableCollection<Transaction> GetAll();
+        ObservableCollection<Transaction> Filter(Type selectedFilterType);
+        ObservableCollection<Transaction> Sort(string selectedSort);
     }
 }

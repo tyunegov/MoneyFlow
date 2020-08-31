@@ -8,6 +8,6 @@ namespace MoneyFllowControlLibrary.Interface
 {
     public interface ITypeTransactionRepository
     {
-        ObservableCollection<TypeModel> GetAll();
+        ObservableCollection<Model.Type> GetAll();
     }
 }
