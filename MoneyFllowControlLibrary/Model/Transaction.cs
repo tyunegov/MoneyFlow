@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MoneyFllowControlLibrary.Model
 {
@@ -13,14 +11,28 @@ namespace MoneyFllowControlLibrary.Model
         public string Description { get; set; }
         public decimal Summ { get; set; }
 
-        public Transaction() { }
-
-        public Transaction(DateTime date, Category category, string description, int summ)
+        public Transaction()
         {
-            Date = date;
-            Category = category;
-            Description = description;
-            Summ = summ;
+            Category = new Category();
+        }
+
+        public override bool Equals(object obj)
+        {
+            Transaction transaction = obj as Transaction;
+            Console.WriteLine(Id + " " + transaction.Id);
+            Console.WriteLine((Category == null) + " " + (transaction.Category == null));
+            return transaction != null &&
+                   Id == transaction.Id &&
+                   (((Date == null && (transaction.Date == null)) ? true : Date.Equals(transaction.Date))) &&
+                   CategoryId == transaction.CategoryId &&
+                   (((Category == null && (transaction.Category == null)) ? true : Category.Equals(transaction.Category))) &&
+                    Description == transaction.Description &&
+                    Summ == transaction.Summ;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Date, CategoryId, Category, Description, Summ);
         }
     }
 }
