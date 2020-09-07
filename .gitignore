@@ -1,2 +1,10 @@
 TestResults
-MoneyFllowTests/obj/Debug/*
+MoneyFllow/obj
+MoneyFllow/bin
+MoneyFllowTests/obj
+MoneyFllowTests/bin
+MoneyFllowControlLibrary/obj
+MoneyFllowControlLibrary/bin
+MoneyFllowControlLibraryTests/obj
+MoneyFllowControlLibraryTests/bin
+.vs
