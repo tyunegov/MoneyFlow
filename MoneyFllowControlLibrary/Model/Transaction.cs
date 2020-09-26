@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoneyFllowControlLibrary.Model
 {
     public class Transaction
     {
+        [ForeignKey("Id")]
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int CategoryId { get; set; }
@@ -11,19 +13,15 @@ namespace MoneyFllowControlLibrary.Model
         public string Description { get; set; }
         public decimal Summ { get; set; }
 
-        public Transaction()
-        {
-            Category = new Category();
-        }
 
         public override bool Equals(object obj)
         {
             Transaction transaction = obj as Transaction;
-            Console.WriteLine(Id + " " + transaction.Id);
-            Console.WriteLine((Category == null) + " " + (transaction.Category == null));
+            if (transaction == null) return false;
+            if (GetHashCode() == transaction.GetHashCode()) return true;
             return transaction != null &&
                    Id == transaction.Id &&
-                   (((Date == null && (transaction.Date == null)) ? true : Date.Equals(transaction.Date))) &&
+                   ((Date == null && (transaction.Date == null)) || Date.Equals(transaction.Date)) &&
                    CategoryId == transaction.CategoryId &&
                    (((Category == null && (transaction.Category == null)) ? true : Category.Equals(transaction.Category))) &&
                     Description == transaction.Description &&

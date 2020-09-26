@@ -12,7 +12,7 @@ namespace MoneyFllowControlLibrary.Model.Tests
         {
             Transaction expected = new Transaction() { Id = 1, Category = new Category() { Id = 1, Transactions = new List<Transaction>() }, CategoryId = 2, Date = new DateTime(), Description = "desc", Summ = 100 };
             Transaction actual = new Transaction() { Id = 1, Category = new Category() { Id = 1, Transactions = new List<Transaction>() }, CategoryId = 2, Date = new DateTime(), Description = "desc", Summ = 100 };
-            Assert.AreEqual(expected, actual);
+            Assert.IsTrue(expected.Equals(actual));
         }
 
         public static IEnumerable<object[]> GetIncorrectTransaction()

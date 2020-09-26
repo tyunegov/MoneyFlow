@@ -1,25 +1,39 @@
-﻿using MoneyFllowControlLibrary.Model;
+﻿using MoneyFllowControlLibrary.Context;
+using MoneyFllowControlLibrary.Model;
 using System;
-using System.Linq;
 using System.Collections.ObjectModel;
-using MoneyFllowControlLibrary.Context;
+using System.Linq;
 
 namespace MoneyFllow.Model
 {
-    public class TransactionRepository:ITransactionRepository
+    public class TransactionRepository : ITransactionRepository
     {
-        ApplicationContext db;
+        IApplicationContext db;
         public TransactionRepository()
         {
             db = new ApplicationContext();
         }
-
-        public ObservableCollection<Transaction> GetAll()
+        public TransactionRepository(IApplicationContext db)
         {
-            var transactions = new ObservableCollection<Transaction>(db.Transactions.ToList());
-            if (transactions.Count==0)
-                    transactions = GenerateTransactionRepository();
-                return transactions;            
+            this.db = db;
+        }
+
+        public IQueryable<Transaction> GetAll()
+        {
+            var transactions = db.Transactions;
+            if (transactions.Count() != 0)
+            {
+                foreach (var v in transactions)
+                {
+                    v.Category = (from p in db.Categories
+                                  where p.Id == v.CategoryId
+                                  select p).FirstOrDefault();
+                    v.Category.Type = (from p in db.Types
+                                       where p.Id == v.Category.TypeId
+                                       select p).FirstOrDefault();
+                }
+            }
+            return transactions;
         }
 
         public Transaction GetById(int id)
@@ -27,17 +41,17 @@ namespace MoneyFllow.Model
             return db.Transactions.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        private static ObservableCollection<Transaction> GenerateTransactionRepository()
-        {
-            var Transactions = new ObservableCollection<Transaction>();
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), new Category() { Title = "Продукты" }, "Description", 400));
-            Transactions.Add(new Transaction(new DateTime(2020, 01, 30), new Category() { Title = "ЗП" }, "", 40000));
-            return Transactions;
-        }
 
-        public void Add(Transaction currentTransaction)
+        public void Add(Transaction transaction)
         {
-             throw new NotImplementedException();
+            db.Transactions.Add(new Transaction()
+            {
+                CategoryId = transaction.Category.Id,
+                Description = transaction.Description,
+                Date=transaction.Date,
+                Summ=transaction.Summ,
+            });
+            db.SaveChanges();
         }
 
         public void Delete(Transaction currentTransaction)
@@ -45,12 +59,12 @@ namespace MoneyFllow.Model
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Transaction> Filter(MoneyFllowControlLibrary.Model.Type selectedFilterType)
+        public IQueryable<Transaction> Filter(MoneyFllowControlLibrary.Model.Type selectedFilterType)
         {
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Transaction> Sort(string selectedSort)
+        public IQueryable<Transaction> Sort(string selectedSort)
         {
             throw new NotImplementedException();
         }

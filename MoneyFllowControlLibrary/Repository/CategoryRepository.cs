@@ -1,22 +1,40 @@
-﻿using MoneyFllowControlLibrary.Interface;
+﻿using MoneyFllowControlLibrary.Context;
+using MoneyFllowControlLibrary.Interface;
 using MoneyFllowControlLibrary.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Linq;
 
 namespace MoneyFllowControlLibrary.Controller
 {
     public class CategoryRepository : ICategoryRepository
     {
-        public ObservableCollection<Category> GetAll()
+        IApplicationContext db;
+        public CategoryRepository()
         {
-            throw new NotImplementedException();
+            db = new ApplicationContext();
         }
 
-        public ObservableCollection<Category> GetByType(Model.Type selectedType)
+        public CategoryRepository(IApplicationContext db)
         {
-            throw new NotImplementedException();
+            this.db = db;
+        }
+
+        public IQueryable<Category> GetAll()
+        {
+            var categories = db.Categories;
+            foreach(var v in categories)
+            {
+                v.Type = (from p in db.Types
+                                where v.TypeId == p.Id
+                                select p).FirstOrDefault();
+            }
+            return categories;
+        }
+
+        public IQueryable<Category> GetByType(Model.Type selectedType)
+        {
+            return db.Categories.Where(x=>x.TypeId==selectedType.Id);
         }
     }
 }
