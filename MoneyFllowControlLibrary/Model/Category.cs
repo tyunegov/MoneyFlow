@@ -7,7 +7,7 @@ namespace MoneyFllowControlLibrary.Model
     public class Category
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string Name { get; set; }
         public int TypeId { get; set; }
         public Type Type { get; set; }
         public ICollection<Transaction> Transactions { get; set; }
@@ -19,7 +19,7 @@ namespace MoneyFllowControlLibrary.Model
             if (GetHashCode() == category.GetHashCode()) return true;
             return category != null &&
                    Id == category.Id &&
-                   Title == category.Title &&
+                   Name == category.Name &&
                    TypeId == category.TypeId &&
                     ((Transactions == null && (category.Transactions == null)) || !Transactions.Except(category.Transactions).Any() &&
                     Transactions.Count() == category.Transactions.Count()) &&
@@ -28,7 +28,7 @@ namespace MoneyFllowControlLibrary.Model
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Title, TypeId, Type, Transactions);
+            return HashCode.Combine(Id, Name, TypeId, Type, Transactions);
         }
     }
 }

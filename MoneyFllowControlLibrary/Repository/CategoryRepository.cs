@@ -4,6 +4,7 @@ using MoneyFllowControlLibrary.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace MoneyFllowControlLibrary.Controller
 {
@@ -32,9 +33,9 @@ namespace MoneyFllowControlLibrary.Controller
             return categories;
         }
 
-        public IQueryable<Category> GetByType(Model.Type selectedType)
+        public IQueryable<Category> GetByTypeId(int typeId)
         {
-            return db.Categories.Where(x=>x.TypeId==selectedType.Id);
+            return db.Categories.Where(x=>x.TypeId==typeId);
         }
     }
 }

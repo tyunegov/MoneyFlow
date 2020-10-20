@@ -1,37 +1,43 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Castle.Core.Internal;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MoneyFllow.Model;
+using MoneyFllowControlLibrary;
+using MoneyFllowControlLibrary.Context;
 using MoneyFllowControlLibrary.Controller;
 using MoneyFllowControlLibrary.Interface;
 using MoneyFllowControlLibrary.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 [assembly: InternalsVisibleTo("MoneyFllowTests")]
 namespace MoneyFllow
 {
-    class MainViewModel:ViewModelBase
+    class MainViewModel : ViewModelBase
     {
+        ObservableCollection<Transaction> transactions;
         ITransactionRepository transactionRepository;
         ITypeTransactionRepository typeTransaction;
         ICategoryRepository categoryRepository;
-        ISortTransaction sortTransaction;
         Transaction newTransaction, selectedTransaction;
         RelayCommand addCommand, deleteCommand, filterCommand;
-        ObservableCollection<Transaction> transactions;
-        Type selectedFilterType;
+        Type selectedFilterType, typeForNewTransaction;
+        Category categoryForNewTransaction;
         string selectedSort;
 
         public MainViewModel()
         {
             newTransaction = new Transaction();
-            selectedFilterType = new Type() { Title = "123" };
-            categoryRepository = new CategoryRepository();
-            transactionRepository = new TransactionRepository();
-            typeTransaction = new TypeRepository();
-            sortTransaction = new SortRepository();
+            typeForNewTransaction = new Type();
+            IApplicationContext context = new MockContext();
+            selectedFilterType = new Type();
+            categoryForNewTransaction = new Category();
+            categoryRepository = new CategoryRepository(context);
+            transactionRepository = new TransactionRepository(context);
+            typeTransaction = new TypeRepository(context);
             deleteCommand = new RelayCommand(ExecuteDeleteTransactionCommand, CanExecuteDeleteTransactionCommand);
         }
 
@@ -40,28 +46,20 @@ namespace MoneyFllow
             transactionRepository = transaction;
         }
 
-        public List<string> Sort 
-        {
-            get
-            {
-                return sortTransaction.GetAll();
-            }
-        }
-
         public ObservableCollection<Type> Types
         {
             get
             {
-                return typeTransaction.GetAll();
+                return new ObservableCollection<Type>(typeTransaction.GetAll().ToList());
             }
         }
 
         public ObservableCollection<Category> Categories
         {
-            get;
-            //{
-            //    return categoryRepository.GetByType(newTransaction.Type);
-            //}
+            get
+            {
+                return categoryRepository.GetByTypeId(selectedFilterType.Id) as ObservableCollection<Category>;
+            }
         }
 
         public Type SelectedFilterType
@@ -94,38 +92,70 @@ namespace MoneyFllow
             }
         }
 
-        public Transaction NewTransaction 
+        public Transaction NewTransaction
         {
             get
             {
-                if(addCommand!=null)
-                addCommand.RaiseCanExecuteChanged();
+                if (addCommand != null)
+                    addCommand.RaiseCanExecuteChanged();
                 return newTransaction;
-            }
-            set 
-            {
-                newTransaction = value;
-                RaisePropertyChanged("NewTransaction");
-        }}
-
-        public ObservableCollection<Transaction> Transactions
-        {
-            get 
-            {
-                if (transactions == null) return transactionRepository.GetAll();
-                else return transactions;
             }
             set
             {
-                transactions = value;
+                newTransaction = value;
+                RaisePropertyChanged("NewTransaction");
+            }
+        }
+
+        public Type TypeForNewTransaction
+        {
+            get
+            {
+                if (addCommand != null)
+                    addCommand.RaiseCanExecuteChanged();
+                return typeForNewTransaction;
+            }
+            set
+            {
+                typeForNewTransaction = value;
+                RaisePropertyChanged("TypeForNewTransaction");
+            }
+        }
+
+        public Category CategoryForNewTransaction
+        {
+            get
+            {
+                if (addCommand != null)
+                    addCommand.RaiseCanExecuteChanged();
+                return categoryForNewTransaction;
+            }
+            set
+            {
+                categoryForNewTransaction = value;
+                RaisePropertyChanged("CategoryForNewTransaction");
+            }
+        }
+
+        public ObservableCollection<Transaction> Transactions
+        {
+            get
+            {
+                if (SelectedFilterType.Id == 0)
+                {
+                    transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());
+
+                }
+                else transactions = new ObservableCollection<Transaction>(transactionRepository.GetByTypeId(selectedFilterType.Id).ToList());
+                return transactions;
             }
         }
 
         public Transaction SelectedTransaction
         {
-            get 
+            get
             {
-                return selectedTransaction; 
+                return selectedTransaction;
             }
             set
             {
@@ -140,7 +170,7 @@ namespace MoneyFllow
         {
             get
             {
-                if(addCommand==null) addCommand = new RelayCommand(ExecuteAddTransactionCommand, CanExecuteAddTransactionCommand);
+                if (addCommand == null) addCommand = new RelayCommand(ExecuteAddTransactionCommand, CanExecuteAddTransactionCommand);
                 return addCommand;
             }
         }
@@ -166,41 +196,42 @@ namespace MoneyFllow
 
         internal void ExecuteFilterTransactionCommand()
         {
-            Transactions = transactionRepository.Filter(SelectedFilterType);
-            Transactions = transactionRepository.Sort(selectedSort);
+            //Transactions = transactionRepository.Filter(SelectedFilterType);
+            //Transactions = transactionRepository.Sort(selectedSort);
         }
 
         internal bool CanExecuteFilterTransactionCommand()
         {
             return (
                 !string.IsNullOrEmpty(selectedSort)
-                || selectedFilterType!=null
+                || selectedFilterType != null
                 );
         }
 
         internal bool CanExecuteDeleteTransactionCommand()
         {
-            return SelectedTransaction!=null;
+            return SelectedTransaction != null;
         }
 
         internal void ExecuteDeleteTransactionCommand()
         {
             transactionRepository.Delete(newTransaction);
         }
-                
+
         internal bool CanExecuteAddTransactionCommand()
         {
             return !(
-             //   newTransaction.Type==null
-                 newTransaction.Category==null
+                   categoryForNewTransaction.Name.IsNullOrEmpty()
                 || newTransaction.Summ == 0
                 );
         }
 
         internal void ExecuteAddTransactionCommand()
         {
+            newTransaction.Category = categoryForNewTransaction;
             transactionRepository.Add(newTransaction);
             NewTransaction = new Transaction();
+            RaisePropertyChanged("Transactions");
         }
     }
 }

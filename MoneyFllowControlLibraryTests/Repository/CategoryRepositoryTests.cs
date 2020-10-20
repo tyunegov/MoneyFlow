@@ -31,15 +31,14 @@ namespace MoneyFllowControlLibrary.Controller.Tests
         }
 
         [TestMethod()]
-        public void GetByTypeTest()
+        public void GetByTypeId()
         {
-            var type = new Model.Type() { Id = 1, Title = "Type1" };
             CategoryRepository repository = new CategoryRepository(db);
-            var category = repository.GetByType(type);
+            var category = repository.GetByTypeId(1);
             Assert.AreEqual(2, category.Count());
             foreach(var v in category)
             {
-                Assert.AreEqual(type.Id,v.TypeId);
+                Assert.AreEqual(1,v.TypeId);
             }
         }
     }

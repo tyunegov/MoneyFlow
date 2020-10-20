@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MoneyFllowControlLibrary.Model
 {
@@ -9,8 +7,7 @@ namespace MoneyFllowControlLibrary.Model
     {
         void Add(Transaction currentTransaction);
         void Delete(Transaction currentTransaction);
-        public ObservableCollection<Transaction> GetAll();
-        ObservableCollection<Transaction> Filter(Type selectedFilterType);
-        ObservableCollection<Transaction> Sort(string selectedSort);
+        public IQueryable<Transaction> GetAll();
+        public IQueryable<Transaction> GetByTypeId(int typeId);
     }
 }

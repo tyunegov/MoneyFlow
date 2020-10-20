@@ -1,13 +1,9 @@
-﻿using MoneyFllowControlLibrary.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Linq;
 
 namespace MoneyFllowControlLibrary.Interface
 {
     public interface ITypeTransactionRepository
     {
-        ObservableCollection<Model.Type> GetAll();
+        IQueryable<Model.Type> GetAll();
     }
 }

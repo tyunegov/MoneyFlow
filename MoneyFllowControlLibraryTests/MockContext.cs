@@ -17,9 +17,9 @@ namespace MoneyFllowControlLibrary
         {
             var categories = new List<Category>
             {
-               new Category {Id=1, Title = "Category1", TypeId=1 },
-               new Category {Id=2, Title = "Category2", TypeId=1 },
-               new Category {Id=3, Title = "Category3", TypeId=2 }
+               new Category {Id=1, Name = "Category1", TypeId=1 },
+               new Category {Id=2, Name = "Category2", TypeId=1 },
+               new Category {Id=3, Name = "Category3", TypeId=2 }
             };
             var transactions = new List<Transaction>
             {
@@ -29,9 +29,9 @@ namespace MoneyFllowControlLibrary
             };
             var types = new List<Type>
             {
-               new Type() {Id=1, Title = "Type1" },
-               new Type() {Id=2, Title = "Type2" },
-               new Type() {Id=3, Title = "Type3" },
+               new Type() {Id=1, Name = "Type1" },
+               new Type() {Id=2, Name = "Type2" },
+               new Type() {Id=3, Name = "Type3" },
             };
             var mockTypes = new Mock<DbSet<Type>>();
             var mockCategories = new Mock<DbSet<Category>>();

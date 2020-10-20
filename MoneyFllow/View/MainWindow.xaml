@@ -14,9 +14,6 @@
                 <ColumnDefinition Width="180"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="5,5,5,0">
-                <TextBlock>Сортировать</TextBlock>
-                <ComboBox IsEditable="True" ItemsSource="{Binding Sort}" SelectedItem="{Binding SelectedSort, UpdateSourceTrigger=PropertyChanged}">
-                </ComboBox>
                 <TextBlock>Тип операции</TextBlock>
                 <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
@@ -35,7 +32,7 @@
                 <DataGrid IsReadOnly="True" Height="Auto" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedTransaction, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" Width="90"/>
-                        <DataGridTextColumn Header="Операция" Binding="{Binding Type.Title}" Width="90" />
+                        <DataGridTextColumn Header="Операция" Binding="{Binding Category.Type.Title}" Width="90" />
                         <DataGridTextColumn Header="Категория" Binding="{Binding Category.Title}" Width="90" />
                         <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="80" />
                         <DataGridTextColumn Header="Сумма" Binding="{Binding Summ}" Width="50" />
@@ -46,20 +43,15 @@
                 <StackPanel>
                     <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}"  SelectedDate="{Binding Path=NewTransaction.Date, UpdateSourceTrigger=PropertyChanged}"></Calendar>
                     <TextBlock Text="Тип операции"></TextBlock>
-                    <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding NewTransaction.Type, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding TypeForNewTransaction, UpdateSourceTrigger=PropertyChanged}">
                     </ComboBox>
                     <TextBlock>Категория</TextBlock>
-                    <ComboBox IsEditable="True" ItemsSource="{Binding Categoties}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Title}"></TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
+                    <ComboBox IsEditable="True" ItemsSource="{Binding TypeForNewTransaction.Categories}" SelectedItem="{Binding CategoryForNewTransaction, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title">
                     </ComboBox>
                     <TextBlock Text="Сумма"></TextBlock>
                     <TextBox Name="TextBoxLastName"
                          Text="{Binding Path=NewTransaction.Summ, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
-                    <Button  Command="{Binding AddTransaction, UpdateSourceTrigger=PropertyChanged}" Content="Добавить"></Button>
+                    <Button  Command="{Binding AddTransaction, UpdateSourceTrigger=PropertyChanged}" Content="Добавить" CommandParameter="{Binding Transactions}"></Button>
                 </StackPanel>
             </Grid>
         </Grid>
