@@ -35,9 +35,9 @@ namespace MoneyFllow
             IApplicationContext context = new MockContext();
             selectedFilterType = new Type();
             categoryForNewTransaction = new Category();
-            categoryRepository = new CategoryRepository(context);
-            transactionRepository = new TransactionRepository(context);
-            typeTransaction = new TypeRepository(context);
+            categoryRepository = new CategoryRepository();
+            transactionRepository = new TransactionRepository();
+            typeTransaction = new TypeRepository();
             deleteCommand = new RelayCommand(ExecuteDeleteTransactionCommand, CanExecuteDeleteTransactionCommand);
         }
 
@@ -144,7 +144,6 @@ namespace MoneyFllow
                 if (SelectedFilterType.Id == 0)
                 {
                     transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());
-
                 }
                 else transactions = new ObservableCollection<Transaction>(transactionRepository.GetByTypeId(selectedFilterType.Id).ToList());
                 return transactions;

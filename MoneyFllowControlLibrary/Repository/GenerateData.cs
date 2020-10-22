@@ -52,7 +52,7 @@ namespace MoneyFllowControlLibrary.Repository
         {
             var list = new List<Transaction>
             {
-                new Transaction() {CategoryId=1, Date=new System.DateTime(), Summ=120},
+                new Transaction() {CategoryId=1, Date=new System.DateTime(), Summ=120, Description="Описание"},
             };
             db.Transactions.AddRange(list);
             db.SaveChanges();

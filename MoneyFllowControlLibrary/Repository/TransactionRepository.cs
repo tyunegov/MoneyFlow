@@ -26,20 +26,8 @@ namespace MoneyFllow.Model
         /// <returns></returns>
         public IQueryable<Transaction> GetAll()
         {
-            var transactions = db.Transactions;
-            if (transactions.Count() != 0)
-            {
-                foreach (var v in transactions)
-                {
-                    v.Category = (from p in db.Categories
-                                  where p.Id == v.CategoryId
-                                  select p).FirstOrDefault();
-                    v.Category.Type = (from p in db.Types
-                                       where p.Id == v.Category.TypeId
-                                       select p).FirstOrDefault();
-                }
-            }
-            return transactions;
+
+            return db.Transactions.Include(c=>c.Category).ThenInclude(t=>t.Type);
         }
         /// <summary>
         /// Получение транзакций по Id

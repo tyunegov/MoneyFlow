@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoneyFllow"
         mc:Ignorable="d"
-        Title="MoneyFllow" MinHeight="350" MinWidth="650" Height="450" Width="800">
+        Name="MoneyFllow" MinHeight="350" MinWidth="650" Height="450" Width="800">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -15,7 +15,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="5,5,5,0">
                 <TextBlock>Тип операции</TextBlock>
-                <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}">
+                <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
                 <TextBlock>Дата начала</TextBlock>
                 <DatePicker IsDropDownOpen="False" SelectedDateFormat="Short"/>
@@ -32,8 +32,8 @@
                 <DataGrid IsReadOnly="True" Height="Auto" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedTransaction, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" Width="90"/>
-                        <DataGridTextColumn Header="Операция" Binding="{Binding Category.Type.Title}" Width="90" />
-                        <DataGridTextColumn Header="Категория" Binding="{Binding Category.Title}" Width="90" />
+                        <DataGridTextColumn Header="Операция" Binding="{Binding Category.Type.Name}" Width="90" />
+                        <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="90" />
                         <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="80" />
                         <DataGridTextColumn Header="Сумма" Binding="{Binding Summ}" Width="50" />
                     </DataGrid.Columns>
@@ -43,10 +43,10 @@
                 <StackPanel>
                     <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}"  SelectedDate="{Binding Path=NewTransaction.Date, UpdateSourceTrigger=PropertyChanged}"></Calendar>
                     <TextBlock Text="Тип операции"></TextBlock>
-                    <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Title" SelectedItem="{Binding TypeForNewTransaction, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Name" SelectedItem="{Binding TypeForNewTransaction, UpdateSourceTrigger=PropertyChanged}">
                     </ComboBox>
                     <TextBlock>Категория</TextBlock>
-                    <ComboBox IsEditable="True" ItemsSource="{Binding TypeForNewTransaction.Categories}" SelectedItem="{Binding CategoryForNewTransaction, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title">
+                    <ComboBox IsEditable="True" ItemsSource="{Binding TypeForNewTransaction.Categories}" SelectedItem="{Binding CategoryForNewTransaction, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name">
                     </ComboBox>
                     <TextBlock Text="Сумма"></TextBlock>
                     <TextBox Name="TextBoxLastName"
