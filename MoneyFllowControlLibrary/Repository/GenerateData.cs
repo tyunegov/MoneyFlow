@@ -18,7 +18,7 @@ namespace MoneyFllowControlLibrary.Repository
             this.db = db;
         }
         /// <summary>
-        /// 
+        /// Создает данные, если БД пустая
         /// </summary>
         /// <returns>
         /// 1 - success
