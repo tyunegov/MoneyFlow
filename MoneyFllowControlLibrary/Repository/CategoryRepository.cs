@@ -1,6 +1,8 @@
-﻿using MoneyFllowControlLibrary.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using MoneyFllowControlLibrary.Context;
 using MoneyFllowControlLibrary.Interface;
 using MoneyFllowControlLibrary.Model;
+using MoneyFllowControlLibrary.Repository;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,14 +25,23 @@ namespace MoneyFllowControlLibrary.Controller
 
         public IQueryable<Category> GetAll()
         {
-            var categories = db.Categories;
-            foreach(var v in categories)
+            IQueryable<Category> categories;
+            int isSuccessGenerateCategoryRepository;
+            try
             {
-                v.Type = (from p in db.Types
-                                where v.TypeId == p.Id
-                                select p).FirstOrDefault();
+                categories = db.Categories.Include(t => t.Type); 
+                if (categories.Count() == 0)
+                {
+                    isSuccessGenerateCategoryRepository = new GenerateData().Create();
+                    if ((isSuccessGenerateCategoryRepository & 1) > 0 || (isSuccessGenerateCategoryRepository & 2) > 0) GetAll();
+                }
+                return categories;
             }
-            return categories;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw (ex);
+            }
         }
 
         public IQueryable<Category> GetByTypeId(int typeId)
