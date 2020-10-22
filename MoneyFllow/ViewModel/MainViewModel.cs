@@ -7,11 +7,13 @@ using MoneyFllowControlLibrary.Context;
 using MoneyFllowControlLibrary.Controller;
 using MoneyFllowControlLibrary.Interface;
 using MoneyFllowControlLibrary.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Type = MoneyFllowControlLibrary.Model.Type;
 
 [assembly: InternalsVisibleTo("MoneyFllowTests")]
 namespace MoneyFllow
@@ -25,12 +27,14 @@ namespace MoneyFllow
         Transaction newTransaction, selectedTransaction;
         RelayCommand addCommand, deleteCommand, filterCommand;
         Type selectedFilterType, typeForNewTransaction;
+        DateTime newTransactionDate;
         Category categoryForNewTransaction;
         string selectedSort;
 
         public MainViewModel()
         {
             newTransaction = new Transaction();
+            newTransactionDate = DateTime.Now;
             typeForNewTransaction = new Type();
             IApplicationContext context = new MockContext();
             selectedFilterType = new Type();
@@ -150,6 +154,18 @@ namespace MoneyFllow
             }
         }
 
+        public DateTime NewTransactionDate
+        {
+            get
+            {
+                return newTransactionDate;
+            }
+            set
+            {
+                newTransactionDate = value;
+            }
+        }
+
         public Transaction SelectedTransaction
         {
             get
@@ -228,6 +244,7 @@ namespace MoneyFllow
         internal void ExecuteAddTransactionCommand()
         {
             newTransaction.Category = categoryForNewTransaction;
+            newTransaction.Date = newTransactionDate;
             transactionRepository.Add(newTransaction);
             NewTransaction = new Transaction();
             RaisePropertyChanged("Transactions");
