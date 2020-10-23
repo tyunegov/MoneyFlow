@@ -43,6 +43,8 @@ namespace MoneyFllow
             transactionRepository = new TransactionRepository();
             typeTransaction = new TypeRepository();
             deleteCommand = new RelayCommand(ExecuteDeleteTransactionCommand, CanExecuteDeleteTransactionCommand);
+            //выбираем все транзакции для первичного отображения
+            transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());
         }
 
         public MainViewModel(ITransactionRepository transaction)
@@ -141,15 +143,13 @@ namespace MoneyFllow
             }
         }
 
+        /// <summary>
+        /// Выводит транзакции в таблицу
+        /// </summary>
         public ObservableCollection<Transaction> Transactions
         {
             get
             {
-                if (SelectedFilterType.Id == 0)
-                {
-                    transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());
-                }
-                else transactions = new ObservableCollection<Transaction>(transactionRepository.GetByTypeId(selectedFilterType.Id).ToList());
                 return transactions;
             }
         }
@@ -209,9 +209,13 @@ namespace MoneyFllow
             }
         }
 
+        /// <summary>
+        /// Фильтрует транзакции для вывода в таблице
+        /// </summary>
         internal void ExecuteFilterTransactionCommand()
         {
-            //Transactions = transactionRepository.Filter(SelectedFilterType);
+            transactions = new ObservableCollection<Transaction>(transactionRepository.GetByTypeId(selectedFilterType.Id).ToList());
+            RaisePropertyChanged("Transactions");
             //Transactions = transactionRepository.Sort(selectedSort);
         }
 
