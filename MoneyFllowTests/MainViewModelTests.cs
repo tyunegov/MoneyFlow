@@ -99,7 +99,7 @@ namespace MoneyFllow.Tests
         public void CanExecuteFilterTransactionCommand_ReturnTrue(string sort, MoneyFllowControlLibrary.Model.Type type)
         {
             MainViewModel main = new MainViewModel();
-            main.SelectedSort = sort;
+          //  main.SelectedSort = sort;
             main.SelectedFilterType = type;
 
             bool result = main.CanExecuteFilterTransactionCommand();

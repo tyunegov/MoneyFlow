@@ -12,8 +12,7 @@ namespace MoneyFllowControlLibrary
 {
     public class MockContext : IApplicationContext
     {
-
-        public MockContext()
+        public MockContext Create()
         {
             var categories = new List<Category>
             {
@@ -37,6 +36,11 @@ namespace MoneyFllowControlLibrary
             var mockCategories = new Mock<DbSet<Category>>();
             var mockTransactions = new Mock<DbSet<Transaction>>();
 
+            mockTransactions.As<IQueryable<IQueryable<Transaction>>>().Setup(m => m.Provider).Returns(transactions.AsQueryable().Provider);
+            mockTransactions.As<IQueryable<IQueryable<Transaction>>>().Setup(m => m.Expression).Returns(transactions.AsQueryable().Expression);
+            mockTransactions.As<IQueryable<IQueryable<Transaction>>>().Setup(m => m.ElementType).Returns(transactions.AsQueryable().ElementType);
+            mockTransactions.As<IQueryable<Transaction>>().Setup(m => m.GetEnumerator()).Returns(transactions.AsQueryable().GetEnumerator());
+
             mockTypes.As<IQueryable<IQueryable<Type>>>().Setup(m => m.Provider).Returns(types.AsQueryable().Provider);
             mockTypes.As<IQueryable<IQueryable<Type>>>().Setup(m => m.Expression).Returns(types.AsQueryable().Expression);
             mockTypes.As<IQueryable<IQueryable<Type>>>().Setup(m => m.ElementType).Returns(types.AsQueryable().ElementType);
@@ -47,15 +51,14 @@ namespace MoneyFllowControlLibrary
             mockCategories.As<IQueryable<IQueryable<Category>>>().Setup(m => m.ElementType).Returns(categories.AsQueryable().ElementType);
             mockCategories.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(categories.AsQueryable().GetEnumerator());
 
-            mockTransactions.As<IQueryable<IQueryable<Category>>>().Setup(m => m.Provider).Returns(transactions.AsQueryable().Provider);
-            mockTransactions.As<IQueryable<IQueryable<Category>>>().Setup(m => m.Expression).Returns(transactions.AsQueryable().Expression);
-            mockTransactions.As<IQueryable<IQueryable<Category>>>().Setup(m => m.ElementType).Returns(transactions.AsQueryable().ElementType);
-            mockTransactions.As<IQueryable<Transaction>>().Setup(m => m.GetEnumerator()).Returns(transactions.AsQueryable().GetEnumerator());
-
-            IApplicationContext mock = new Mock<IApplicationContext>().Object;
-            Types = mockTypes.Object;
-            Categories = mockCategories.Object;
-            Transactions = mockTransactions.Object;
+            var v = new MockContext();
+            v.Categories = mockCategories.Object;
+            v.Categories.AddRange(categories);
+            v.Transactions = mockTransactions.Object;
+            v.Transactions.AddRange(transactions);
+            v.Types = mockTypes.Object;
+            v.Types.AddRange(types);
+            return v;
         }
 
         public DbSet<Category> Categories { get; set; }

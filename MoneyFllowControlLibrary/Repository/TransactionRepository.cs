@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MoneyFllowControlLibrary.Context;
 using MoneyFllowControlLibrary.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Type = MoneyFllowControlLibrary.Model.Type;
@@ -12,6 +13,9 @@ namespace MoneyFllow.Model
     public class TransactionRepository : ITransactionRepository
     {
         IApplicationContext db;
+
+        public DateTime Today { get; protected set; }
+
         public TransactionRepository()
         {
             db = new ApplicationContext();
@@ -26,7 +30,6 @@ namespace MoneyFllow.Model
         /// <returns></returns>
         public IQueryable<Transaction> GetAll()
         {
-
             return db.Transactions.Include(c=>c.Category).ThenInclude(t=>t.Type);
         }
         /// <summary>
@@ -65,19 +68,17 @@ namespace MoneyFllow.Model
         /// <param name="typeId">Идентификатор для Type в БД</param>
         /// <returns></returns>
         public IQueryable<Transaction> GetByTypeId(int typeId)
+        {            
+            var transactions = db.Transactions.Include(c => c.Category).ThenInclude(t => t.Type).Where(t=>t.Category.TypeId==typeId);
+            return transactions;
+        }
+
+        public IQueryable<Transaction> Filter(int typeId, DateTime dateStart, DateTime dateEnd)
         {
-            var transactions =from tr in db.Transactions
-                              join c in db.Categories on tr.CategoryId equals c.Id
-                              where(c.TypeId==typeId)
-                              select new Transaction()
-                              {
-                                  Id=tr.Id,
-                                  Category=c,
-                                  Date=tr.Date,
-                                  Description=tr.Description,
-                                  CategoryId=tr.CategoryId,
-                                  Summ=tr.Summ
-                              };
+            IQueryable<Transaction> transactions;
+            if (typeId > 0) transactions = GetByTypeId(typeId);
+            else transactions = db.Transactions;
+            transactions = transactions.Where(tr=> tr.Date>=dateStart).Where(tr => tr.Date<=dateEnd);
             return transactions;
         }
     }

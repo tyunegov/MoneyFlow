@@ -29,6 +29,7 @@ namespace MoneyFllow
         Type selectedFilterType, typeForNewTransaction;
         DateTime newTransactionDate;
         Category categoryForNewTransaction;
+        DateTime dateStart, dateEnd;
         string selectedSort;
 
         public MainViewModel()
@@ -36,15 +37,14 @@ namespace MoneyFllow
             newTransaction = new Transaction();
             newTransactionDate = DateTime.Now;
             typeForNewTransaction = new Type();
-            IApplicationContext context = new MockContext();
-            selectedFilterType = new Type();
             categoryForNewTransaction = new Category();
             categoryRepository = new CategoryRepository();
             transactionRepository = new TransactionRepository();
             typeTransaction = new TypeRepository();
             deleteCommand = new RelayCommand(ExecuteDeleteTransactionCommand, CanExecuteDeleteTransactionCommand);
             //выбираем все транзакции для первичного отображения
-            transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());
+            transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());            
+
         }
 
         public MainViewModel(ITransactionRepository transaction)
@@ -56,7 +56,8 @@ namespace MoneyFllow
         {
             get
             {
-                return new ObservableCollection<Type>(typeTransaction.GetAll().ToList());
+                var result = new ObservableCollection<Type>(typeTransaction.GetAll().ToList());
+                return result;
             }
         }
 
@@ -68,10 +69,13 @@ namespace MoneyFllow
             }
         }
 
+
+        #region FilterTransactions
         public Type SelectedFilterType
         {
             get
             {
+                selectedFilterType = selectedFilterType == null ? FilterTypes.Last() : selectedFilterType;
                 if (filterCommand != null)
                     filterCommand.RaiseCanExecuteChanged();
                 return selectedFilterType;
@@ -83,18 +87,80 @@ namespace MoneyFllow
             }
         }
 
-        public string SelectedSort
+        public ObservableCollection<Type> FilterTypes
         {
             get
             {
-                if (filterCommand != null)
-                    filterCommand.RaiseCanExecuteChanged();
-                return selectedSort;
+
+                var result = new ObservableCollection<Type>(typeTransaction.GetAll().ToList());
+                result.Add(new Type() { Id = 0, Name = "Все" });
+                /// Добавить параметр все
+                return result;
+            }
+        }
+
+        public DateTime DateStart
+        {
+            get
+            {
+                if ((int)dateStart.CompareTo(new DateTime())==0)
+                    dateStart = new DateTime(2000,01,01);
+                return dateStart;
             }
             set
             {
-                selectedSort = value;
-                RaisePropertyChanged("SelectedSort");
+                dateStart = value;
+                RaisePropertyChanged("DateStart");
+            }
+        }
+
+        public DateTime DateEnd
+        {
+            get
+            {
+                if ((int)dateEnd.CompareTo(new DateTime()) == 0)
+                    dateEnd = DateTime.Now;
+                return dateEnd;
+            }
+            set
+            {
+                dateEnd = value;
+                RaisePropertyChanged("DateEnd");
+            }
+        }
+
+        public ICommand ApplyFilterCommand
+        {
+            get
+            {
+                if (filterCommand == null) filterCommand = new RelayCommand(ExecuteFilterTransactionCommand, CanExecuteFilterTransactionCommand);
+                return filterCommand;
+            }
+        }
+
+        /// <summary>
+        /// Фильтрует транзакции для вывода в таблице
+        /// </summary>
+        internal void ExecuteFilterTransactionCommand()
+        {
+            Transactions = new ObservableCollection<Transaction>(transactionRepository.Filter(selectedFilterType.Id, dateStart, dateEnd).ToList());
+        }
+
+        internal bool CanExecuteFilterTransactionCommand()
+        {
+            return (
+                !string.IsNullOrEmpty(selectedSort)
+                || selectedFilterType != null
+                );
+        } 
+        #endregion
+
+        public ICommand AddTransaction
+        {
+            get
+            {
+                if (addCommand == null) addCommand = new RelayCommand(ExecuteAddTransactionCommand, CanExecuteAddTransactionCommand);
+                return addCommand;
             }
         }
 
@@ -152,6 +218,11 @@ namespace MoneyFllow
             {
                 return transactions;
             }
+            set
+            {
+                transactions = value;
+                RaisePropertyChanged("Transactions");
+            }
         }
 
         public DateTime NewTransactionDate
@@ -180,16 +251,6 @@ namespace MoneyFllow
             }
         }
 
-
-        public ICommand AddTransaction
-        {
-            get
-            {
-                if (addCommand == null) addCommand = new RelayCommand(ExecuteAddTransactionCommand, CanExecuteAddTransactionCommand);
-                return addCommand;
-            }
-        }
-
         public ICommand DeleteTransaction
         {
             get
@@ -198,33 +259,6 @@ namespace MoneyFllow
                 return deleteCommand;
             }
 
-        }
-
-        public ICommand ApplyFilterCommand
-        {
-            get
-            {
-                if (filterCommand == null) filterCommand = new RelayCommand(ExecuteFilterTransactionCommand, CanExecuteFilterTransactionCommand);
-                return filterCommand;
-            }
-        }
-
-        /// <summary>
-        /// Фильтрует транзакции для вывода в таблице
-        /// </summary>
-        internal void ExecuteFilterTransactionCommand()
-        {
-            transactions = new ObservableCollection<Transaction>(transactionRepository.GetByTypeId(selectedFilterType.Id).ToList());
-            RaisePropertyChanged("Transactions");
-            //Transactions = transactionRepository.Sort(selectedSort);
-        }
-
-        internal bool CanExecuteFilterTransactionCommand()
-        {
-            return (
-                !string.IsNullOrEmpty(selectedSort)
-                || selectedFilterType != null
-                );
         }
 
         internal bool CanExecuteDeleteTransactionCommand()

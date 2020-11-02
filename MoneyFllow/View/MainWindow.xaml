@@ -15,19 +15,18 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="5,5,5,0">
                 <TextBlock>Тип операции</TextBlock>
-                <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}">
-                </ComboBox>
+                <ComboBox IsEditable="True" ItemsSource="{Binding FilterTypes}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedFilterType, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock>Дата начала</TextBlock>
-                <DatePicker IsDropDownOpen="False" SelectedDateFormat="Short"/>
+                <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding DateStart, UpdateSourceTrigger=PropertyChanged}" IsDropDownOpen="False" CalendarStyle="{DynamicResource Calendar}"/>
                 <TextBlock>Дата окончания</TextBlock>
-                <DatePicker IsDropDownOpen="False" SelectedDateFormat="Short"/>
+                <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding DateEnd, UpdateSourceTrigger=PropertyChanged}" IsDropDownOpen="False" CalendarStyle="{DynamicResource Calendar}"/>
                 <Button Command="{Binding ApplyFilterCommand, UpdateSourceTrigger=PropertyChanged}" Content="Применить" Cursor="Hand"></Button>
             </StackPanel>
             <Grid Grid.Column="1" Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="168*"></RowDefinition>
-                    <RowDefinition Height="233*"/>
+                    <RowDefinition Height="177.653"></RowDefinition>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <DataGrid IsReadOnly="True" Height="Auto" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedTransaction, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2">
                     <DataGrid.Columns>
@@ -41,7 +40,7 @@
             </Grid>
             <Grid Grid.Column="2" Margin="5">
                 <StackPanel>
-                    <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}"  SelectedDate="{Binding Path=NewTransaction.Date, UpdateSourceTrigger=PropertyChanged}"></Calendar>
+                    <Calendar SelectedDate="{Binding Path=NewTransaction.Date, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource Calendar}"></Calendar>
                     <TextBlock Text="Тип операции"></TextBlock>
                     <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Name" SelectedItem="{Binding TypeForNewTransaction, UpdateSourceTrigger=PropertyChanged}">
                     </ComboBox>

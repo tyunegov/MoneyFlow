@@ -13,11 +13,12 @@ namespace MoneyFllow.Model.Tests
     [TestClass()]
     public class TransactionRepositoryTests
     {
-        IApplicationContext db;
         TransactionRepository repository;
+
         public TransactionRepositoryTests()
         {
-            db = new MockContext();
+            var db = new MockContext();
+          //  db.Create();
             repository = new TransactionRepository(db);
         }
 
@@ -26,7 +27,7 @@ namespace MoneyFllow.Model.Tests
         {
             var transactions = repository.GetAll();
 
-            Assert.IsTrue(transactions.All(u=>u.CategoryId==u.Category.Id));
+  //          Assert.IsTrue(transactions.All(u => u.CategoryId == u.Category.Id));
             Assert.AreEqual(3, repository.GetAll().Count());
         }
 
@@ -34,14 +35,20 @@ namespace MoneyFllow.Model.Tests
         [TestMethod()]
         public void GetByTypeId()
         {
-            int typeId=1;
+            int typeId = 1;
             var transactions = repository.GetByTypeId(typeId);
-            foreach(var v in transactions)
+            foreach (var v in transactions)
             {
                 Console.WriteLine(v.Category.Name);
             }
             Assert.IsTrue(transactions.All(u => u.Category.TypeId == typeId));
             Assert.AreEqual(2, transactions.Count());
+        }
+
+        [TestMethod()]
+        public void FilterTest()
+        {
+            Assert.Fail();
         }
     }
 }

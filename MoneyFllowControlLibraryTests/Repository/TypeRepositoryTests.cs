@@ -12,18 +12,18 @@ namespace MoneyFllowControlLibrary.Model.Tests
     [TestClass()]
     public class TypeRepositoryTests
     {
-        MockContext db;
-
+        TypeRepository repository;
         [TestInitialize]
         public void Setup()
         {
-            db = new MockContext();
+            IApplicationContext db = new MockContext().Create();
+         //   db.Create();
+            repository = new TypeRepository(db);
         }
 
         [TestMethod()]
         public void GetAll()
         {
-            TypeRepository repository = new TypeRepository(db);
             var types = repository.GetAll();
             foreach (var v in types)
             {

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyFllowTests", "MoneyFll
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyFllowControlLibrary", "MoneyFllowControlLibrary\MoneyFllowControlLibrary.csproj", "{712E3918-A6A4-4122-9762-092D08A4D0A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyFllowControlLibraryTests", "MoneyFllowControlLibraryTests\MoneyFllowControlLibraryTests.csproj", "{148399BE-2B39-4CFA-922C-BEB53E0E9F2D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{712E3918-A6A4-4122-9762-092D08A4D0A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{712E3918-A6A4-4122-9762-092D08A4D0A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{712E3918-A6A4-4122-9762-092D08A4D0A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{148399BE-2B39-4CFA-922C-BEB53E0E9F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{148399BE-2B39-4CFA-922C-BEB53E0E9F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{148399BE-2B39-4CFA-922C-BEB53E0E9F2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{148399BE-2B39-4CFA-922C-BEB53E0E9F2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
