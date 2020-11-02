@@ -50,6 +50,9 @@
                     <TextBlock Text="Сумма"></TextBlock>
                     <TextBox Name="TextBoxLastName"
                          Text="{Binding Path=NewTransaction.Summ, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                    <TextBlock Text="Описание"></TextBlock>
+                    <TextBox Name="TextBoxDescriptionName"
+                         Text="{Binding Path=NewTransaction.Description, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
                     <Button  Command="{Binding AddTransaction, UpdateSourceTrigger=PropertyChanged}" Content="Добавить" CommandParameter="{Binding Transactions}"></Button>
                 </StackPanel>
             </Grid>
