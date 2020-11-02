@@ -283,9 +283,11 @@ namespace MoneyFllow
         {
             newTransaction.Category = categoryForNewTransaction;
             newTransaction.Date = newTransactionDate;
-            transactionRepository.Add(newTransaction);
-            NewTransaction = new Transaction();
+            Transactions.Add(newTransaction);
+
             RaisePropertyChanged("Transactions");
+
+            NewTransaction = new Transaction();
         }
     }
 }
