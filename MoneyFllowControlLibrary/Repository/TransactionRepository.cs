@@ -58,9 +58,31 @@ namespace MoneyFllow.Model
             return db.SaveChanges();
         }
 
-        public void Delete(Transaction currentTransaction)
+        /// <summary>
+        /// Удаление транзакции
+        /// </summary>
+        /// <param name="transaction">Удаляемая транзакция</param>
+        /// <returns>
+        /// -1 - Вызвалось исключение при удалении
+        /// 0 - Удаление не произошло
+        /// 1 - Удаление произошло успешно
+        /// </returns>
+        public int Delete(Transaction transaction)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            try
+            {
+                if (transaction.Id > 0)
+                {
+                    db.Transactions.Remove(transaction);
+                    result = db.SaveChanges();
+                }
+            }
+            catch 
+            {
+                result = -1;
+            }
+            return result;
         }
 
         /// <summary>

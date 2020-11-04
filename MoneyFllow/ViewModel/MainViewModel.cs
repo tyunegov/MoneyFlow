@@ -32,15 +32,12 @@ namespace MoneyFllow
         string selectedSort;
 
         public MainViewModel()
-        {            
+        {
             typeForNewTransaction = new Type();
             categoryRepository = new CategoryRepository();
             transactionRepository = new TransactionRepository();
             typeTransaction = new TypeRepository();
             deleteCommand = new RelayCommand(ExecuteDeleteTransactionCommand, CanExecuteDeleteTransactionCommand);
-            //выбираем все транзакции для первичного отображения
-            transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());            
-
         }
 
         public MainViewModel(ITransactionRepository transaction)
@@ -99,8 +96,8 @@ namespace MoneyFllow
         {
             get
             {
-                if ((int)dateStart.CompareTo(new DateTime())==0)
-                    dateStart = new DateTime(2000,01,01);
+                if ((int)dateStart.CompareTo(new DateTime()) == 0)
+                    dateStart = new DateTime(2000, 01, 01);
                 return dateStart;
             }
             set
@@ -148,7 +145,7 @@ namespace MoneyFllow
                 !string.IsNullOrEmpty(selectedSort)
                 || selectedFilterType != null
                 );
-        } 
+        }
         #endregion
 
         /// <summary>
@@ -158,6 +155,8 @@ namespace MoneyFllow
         {
             get
             {
+                if (transactions == null)
+                    transactions = new ObservableCollection<Transaction>(transactionRepository.GetAll().ToList());
                 return transactions;
             }
             set
@@ -167,6 +166,8 @@ namespace MoneyFllow
             }
         }
 
+        #region Delete transaction
+
         public Transaction SelectedTransaction
         {
             get
@@ -175,9 +176,7 @@ namespace MoneyFllow
             }
             set
             {
-                selectedTransaction = new Transaction();
                 selectedTransaction = value;
-                deleteCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -198,8 +197,12 @@ namespace MoneyFllow
 
         internal void ExecuteDeleteTransactionCommand()
         {
-            transactionRepository.Delete(newTransaction);
+            int result;
+            result = transactionRepository.Delete(SelectedTransaction);
+            if(result>0) Transactions.Remove(SelectedTransaction);
+            RaisePropertyChanged("Transactions");
         }
+        #endregion
 
         #region Add transaction
 
