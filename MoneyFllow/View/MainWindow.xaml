@@ -36,6 +36,11 @@
                         <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="80" />
                         <DataGridTextColumn Header="Сумма" Binding="{Binding Summ}" Width="50" />
                     </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteTransaction}"></MenuItem>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
                 </DataGrid>
             </Grid>
             <Grid Grid.Column="2" Margin="5">
