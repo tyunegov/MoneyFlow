@@ -6,7 +6,7 @@ namespace MoneyFllowControlLibrary.Model
 {
     public interface ITransactionRepository
     {
-        void Add(Transaction currentTransaction);
+        int Add(Transaction currentTransaction);
         void Delete(Transaction currentTransaction);
         IQueryable<Transaction> GetAll();
         IQueryable<Transaction> GetByTypeId(int typeId);

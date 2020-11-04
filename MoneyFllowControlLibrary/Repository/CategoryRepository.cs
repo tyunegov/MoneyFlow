@@ -15,6 +15,7 @@ namespace MoneyFllowControlLibrary.Controller
         IApplicationContext db;
         public CategoryRepository()
         {
+            new GenerateData().Create();
             db = new ApplicationContext();
         }
 
@@ -26,15 +27,9 @@ namespace MoneyFllowControlLibrary.Controller
         public IQueryable<Category> GetAll()
         {
             IQueryable<Category> categories;
-            int isSuccessGenerateCategoryRepository;
             try
             {
                 categories = db.Categories.Include(t => t.Type); 
-                if (categories.Count() == 0)
-                {
-                    isSuccessGenerateCategoryRepository = new GenerateData().Create();
-                    if ((isSuccessGenerateCategoryRepository & 1) > 0 || (isSuccessGenerateCategoryRepository & 2) > 0) GetAll();
-                }
                 return categories;
             }
             catch (Exception ex)

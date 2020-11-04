@@ -45,14 +45,14 @@
                     <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Name" SelectedItem="{Binding TypeForNewTransaction, UpdateSourceTrigger=PropertyChanged}">
                     </ComboBox>
                     <TextBlock>Категория</TextBlock>
-                    <ComboBox IsEditable="True" ItemsSource="{Binding TypeForNewTransaction.Categories}" SelectedItem="{Binding CategoryForNewTransaction, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name">
+                    <ComboBox IsEditable="True"  ItemsSource="{Binding TypeForNewTransaction.Categories}"  SelectedValue="{Binding CategoryForNewTransaction, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name">
                     </ComboBox>
                     <TextBlock Text="Сумма"></TextBlock>
                     <TextBox Name="TextBoxLastName"
                          Text="{Binding Path=NewTransaction.Summ, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
                     <TextBlock Text="Описание"></TextBlock>
                     <TextBox Name="TextBoxDescriptionName"
-                         Text="{Binding Path=NewTransaction.Description, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                         Text="{Binding Path=NewTransaction.Description, UpdateSourceTrigger=LostFocus}" ></TextBox>
                     <Button  Command="{Binding AddTransaction, UpdateSourceTrigger=PropertyChanged}" Content="Добавить" CommandParameter="{Binding Transactions}"></Button>
                 </StackPanel>
             </Grid>

@@ -45,16 +45,17 @@ namespace MoneyFllow.Model
         /// <summary>
         /// Добавление транзакции
         /// </summary>
-        public void Add(Transaction transaction)
+        public int Add(Transaction transaction)
         {
+            //При добавлении db.Transactions.Add(transaction) пытается добавить Category и Type
             db.Transactions.Add(new Transaction()
             {
                 CategoryId = transaction.Category.Id,
                 Description = transaction.Description,
-                Date=transaction.Date,
-                Summ=transaction.Summ,
+                Date = transaction.Date,
+                Summ = transaction.Summ,
             });
-            db.SaveChanges();
+            return db.SaveChanges();
         }
 
         public void Delete(Transaction currentTransaction)
@@ -77,7 +78,7 @@ namespace MoneyFllow.Model
         {
             IQueryable<Transaction> transactions;
             if (typeId > 0) transactions = GetByTypeId(typeId);
-            else transactions = db.Transactions;
+            else transactions = GetAll();
             transactions = transactions.Where(tr=> tr.Date>=dateStart).Where(tr => tr.Date<=dateEnd);
             return transactions;
         }

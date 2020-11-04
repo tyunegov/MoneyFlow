@@ -62,9 +62,9 @@ namespace MoneyFllowControlLibrary.Repository
         {
             var list = new List<Type>
             {
-                new Type() {Name="Доход" },
-                new Type() {Name="Расход" },
-                new Type() {Name="Перевод" },
+                new Type() {Id=1, Name="Доход" },
+                new Type() {Id=2, Name="Расход" },
+                new Type() {Id=3, Name="Перевод" },
             };
             db.Types.AddRange(list);
             db.SaveChanges();
@@ -98,6 +98,9 @@ namespace MoneyFllowControlLibrary.Repository
                 new Category() { Name = "Ремонт", TypeId = 2 },
                 new Category() { Name = "Товары для дома", TypeId = 2 },
                 new Category() { Name = "Хобби", TypeId = 2 },
+
+                 new Category() { Name = "Семья", TypeId = 3 },
+                  new Category() { Name = "Другое", TypeId = 3 },
         };
             db.Categories.AddRange(list);
             db.SaveChanges();

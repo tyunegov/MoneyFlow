@@ -22,15 +22,9 @@ namespace MoneyFllowControlLibrary.Model
         public IQueryable<Type> GetAll()
         {
             IQueryable<Type> result;
-            int isSuccessGenerateTypeRepository=0;
             try
             {
                 result = db.Types;
-                if (result.Count() == 0)
-                {
-                    isSuccessGenerateTypeRepository = new GenerateData().Create();
-                    if ((isSuccessGenerateTypeRepository&1)>0 || (isSuccessGenerateTypeRepository&2)>0) GetAll();
-                }
                 foreach (var v in result)
                 {
                     v.Categories = (from p in db.Categories

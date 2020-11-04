@@ -27,17 +27,13 @@ namespace MoneyFllow
         Transaction newTransaction, selectedTransaction;
         RelayCommand addCommand, deleteCommand, filterCommand;
         Type selectedFilterType, typeForNewTransaction;
-        DateTime newTransactionDate;
         Category categoryForNewTransaction;
         DateTime dateStart, dateEnd;
         string selectedSort;
 
         public MainViewModel()
-        {
-            newTransaction = new Transaction();
-            newTransactionDate = DateTime.Now;
+        {            
             typeForNewTransaction = new Type();
-            categoryForNewTransaction = new Category();
             categoryRepository = new CategoryRepository();
             transactionRepository = new TransactionRepository();
             typeTransaction = new TypeRepository();
@@ -155,60 +151,6 @@ namespace MoneyFllow
         } 
         #endregion
 
-        public ICommand AddTransaction
-        {
-            get
-            {
-                if (addCommand == null) addCommand = new RelayCommand(ExecuteAddTransactionCommand, CanExecuteAddTransactionCommand);
-                return addCommand;
-            }
-        }
-
-        public Transaction NewTransaction
-        {
-            get
-            {
-                if (addCommand != null)
-                    addCommand.RaiseCanExecuteChanged();
-                return newTransaction;
-            }
-            set
-            {
-                newTransaction = value;
-                RaisePropertyChanged("NewTransaction");
-            }
-        }
-
-        public Type TypeForNewTransaction
-        {
-            get
-            {
-                if (addCommand != null)
-                    addCommand.RaiseCanExecuteChanged();
-                return typeForNewTransaction;
-            }
-            set
-            {
-                typeForNewTransaction = value;
-                RaisePropertyChanged("TypeForNewTransaction");
-            }
-        }
-
-        public Category CategoryForNewTransaction
-        {
-            get
-            {
-                if (addCommand != null)
-                    addCommand.RaiseCanExecuteChanged();
-                return categoryForNewTransaction;
-            }
-            set
-            {
-                categoryForNewTransaction = value;
-                RaisePropertyChanged("CategoryForNewTransaction");
-            }
-        }
-
         /// <summary>
         /// Выводит транзакции в таблицу
         /// </summary>
@@ -222,18 +164,6 @@ namespace MoneyFllow
             {
                 transactions = value;
                 RaisePropertyChanged("Transactions");
-            }
-        }
-
-        public DateTime NewTransactionDate
-        {
-            get
-            {
-                return newTransactionDate;
-            }
-            set
-            {
-                newTransactionDate = value;
             }
         }
 
@@ -271,23 +201,86 @@ namespace MoneyFllow
             transactionRepository.Delete(newTransaction);
         }
 
+        #region Add transaction
+
+        public Transaction NewTransaction
+        {
+            get
+            {
+                if (newTransaction == null)
+                {
+                    newTransaction = new Transaction();
+                    newTransaction.Date = DateTime.Today;
+                }
+                if (addCommand != null)
+                    addCommand.RaiseCanExecuteChanged();
+                return newTransaction;
+            }
+            set
+            {
+                newTransaction = value;
+                RaisePropertyChanged("NewTransaction");
+            }
+        }
+
+        public Type TypeForNewTransaction
+        {
+            get
+            {
+                if (addCommand != null)
+                    addCommand.RaiseCanExecuteChanged();
+                return typeForNewTransaction;
+            }
+            set
+            {
+                typeForNewTransaction = value;
+                RaisePropertyChanged("TypeForNewTransaction");
+            }
+        }
+
+        public Category CategoryForNewTransaction
+        {
+            get
+           {
+                if(categoryForNewTransaction==null) categoryForNewTransaction = new Category();
+                if (addCommand != null)
+                    addCommand.RaiseCanExecuteChanged();
+                return categoryForNewTransaction;
+            }
+            set
+            {
+                categoryForNewTransaction = value;
+                RaisePropertyChanged("CategoryForNewTransaction");
+            }
+        }
+
+        public ICommand AddTransaction
+        {
+            get
+            {
+                if (addCommand == null) addCommand = new RelayCommand(ExecuteAddTransactionCommand, CanExecuteAddTransactionCommand);
+                return addCommand;
+            }
+        }
+
         internal bool CanExecuteAddTransactionCommand()
         {
-            return !(
-                   categoryForNewTransaction.Name.IsNullOrEmpty()
-                || newTransaction.Summ == 0
+            return (
+                   categoryForNewTransaction.Id>0
+                && newTransaction.Summ != 0
                 );
         }
 
         internal void ExecuteAddTransactionCommand()
         {
             newTransaction.Category = categoryForNewTransaction;
-            newTransaction.Date = newTransactionDate;
-            Transactions.Add(newTransaction);
+            int resultAdd = transactionRepository.Add(newTransaction);
+            if (resultAdd>0) Transactions.Add(newTransaction);
 
             RaisePropertyChanged("Transactions");
 
             NewTransaction = new Transaction();
         }
+        #endregion
     }
 }

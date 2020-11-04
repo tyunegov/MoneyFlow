@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyFllowControlLibrary.Model;
+using MoneyFllowControlLibrary.Repository;
 
 namespace MoneyFllowControlLibrary.Context
 {
