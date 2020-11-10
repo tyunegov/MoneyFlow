@@ -104,5 +104,12 @@ namespace MoneyFllow.Model
             transactions = transactions.Where(tr=> tr.Date>=dateStart).Where(tr => tr.Date<=dateEnd);
             return transactions;
         }
+
+        public int Change(Transaction transaction)
+        {
+            db.Transactions.Update(transaction);
+            var _transaction = db.Transactions.Find(transaction.Id);
+            return db.SaveChanges();
+        }
     }
 }

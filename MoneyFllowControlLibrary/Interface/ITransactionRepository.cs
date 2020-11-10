@@ -18,5 +18,10 @@ namespace MoneyFllowControlLibrary.Model
         /// <param name="dateEnd"></param>
         /// <returns></returns>
         public IQueryable<Transaction> Filter(int typeId, DateTime dateStart, DateTime dateEnd);
+        /// <summary>
+        /// Изменение транзакции
+        /// </summary>
+        /// <param name="transaction">Измененная транзакция</param>
+        int Change(Transaction transaction);
     }
 }

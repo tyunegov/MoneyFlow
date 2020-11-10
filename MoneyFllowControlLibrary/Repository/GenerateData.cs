@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MoneyFllowControlLibrary.Repository
 {
-    public class GenerateData : IGenerateData
+    public class GenerateData
     {
         IApplicationContext db;
         public GenerateData()

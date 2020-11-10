@@ -1,14 +1,12 @@
-﻿using Castle.Core.Internal;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MoneyFllow.Model;
-using MoneyFllowControlLibrary;
-using MoneyFllowControlLibrary.Context;
+using MoneyFllow.View;
+using MoneyFllow.ViewModel;
 using MoneyFllowControlLibrary.Controller;
 using MoneyFllowControlLibrary.Interface;
 using MoneyFllowControlLibrary.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,7 +23,7 @@ namespace MoneyFllow
         ITypeTransactionRepository typeTransaction;
         ICategoryRepository categoryRepository;
         Transaction newTransaction, selectedTransaction;
-        RelayCommand addCommand, deleteCommand, filterCommand;
+        RelayCommand addCommand, deleteCommand, filterCommand, changeTransaction;
         Type selectedFilterType, typeForNewTransaction;
         Category categoryForNewTransaction;
         DateTime dateStart, dateEnd;
@@ -87,7 +85,6 @@ namespace MoneyFllow
 
                 var result = new ObservableCollection<Type>(typeTransaction.GetAll().ToList());
                 result.Add(new Type() { Id = 0, Name = "Все" });
-                /// Добавить параметр все
                 return result;
             }
         }
@@ -283,6 +280,34 @@ namespace MoneyFllow
             RaisePropertyChanged("Transactions");
 
             NewTransaction = new Transaction();
+        }
+        #endregion
+
+        #region Change transaction
+        public ICommand ChangeTransaction
+        {
+            get
+            {
+                if (changeTransaction == null) changeTransaction = new RelayCommand(ExecuteChangeTransactionCommand, CanExecuteChangeTransactionCommand);
+                return changeTransaction;
+            }
+        }
+
+        internal bool CanExecuteChangeTransactionCommand()
+        {
+            return SelectedTransaction != null;
+        }
+
+        internal void ExecuteChangeTransactionCommand()
+        {
+            ChangeTransaction page = new ChangeTransaction();
+            ChangeTransactionModel change = page.DataContext as ChangeTransactionModel;
+            change.Transaction = SelectedTransaction;
+            page.ShowDialog();
+
+            Transactions.Remove(Transactions.Where(x=>x.Id==SelectedTransaction.Id).FirstOrDefault());
+            Transactions.Add(change.Transaction);
+            
         }
         #endregion
     }

@@ -28,7 +28,7 @@
                     <RowDefinition Height="177.653"></RowDefinition>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <DataGrid IsReadOnly="True" Height="Auto" Grid.Row="1" 
+                <DataGrid Height="Auto" Grid.Row="1" 
                           AutoGenerateColumns="False" 
                           ItemsSource="{Binding Transactions}" 
                           SelectedItem="{Binding SelectedTransaction, UpdateSourceTrigger=PropertyChanged}" 
@@ -43,6 +43,7 @@
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>
                         <ContextMenu>
+                            <MenuItem Header="Редактировать" Command="{Binding ChangeTransaction}"></MenuItem>
                             <MenuItem Header="Удалить" Command="{Binding DeleteTransaction}"></MenuItem>
                         </ContextMenu>
                     </DataGrid.ContextMenu>

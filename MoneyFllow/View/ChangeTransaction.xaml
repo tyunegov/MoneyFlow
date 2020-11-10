@@ -1,0 +1,29 @@
+﻿<Window x:Class="MoneyFllow.View.ChangeTransaction"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MoneyFllow.View"
+        mc:Ignorable="d"
+        Title="Изменить" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
+        Height="280" Width="300">
+    <Grid Width="300">
+        <StackPanel Margin="0 15 0 0" Width="200">
+            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding Transaction.Date, UpdateSourceTrigger=PropertyChanged}" IsDropDownOpen="False" CalendarStyle="{DynamicResource Calendar}"/>
+            <TextBlock Text="Тип операции"></TextBlock>
+            <ComboBox IsEditable="True" ItemsSource="{Binding Types}" DisplayMemberPath="Name" SelectedItem="{Binding TypeForChangeTransaction, UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
+            <TextBlock>Категория</TextBlock>
+            <ComboBox IsEditable="True"  ItemsSource="{Binding TypeForChangeTransaction.Categories}"  SelectedItem="{Binding CategoryForChangeTransaction, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name">
+            </ComboBox>
+            <TextBlock Text="Сумма"></TextBlock>
+            <TextBox Name="TextBoxLastName"
+                         Text="{Binding Path=Transaction.Summ, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+            <TextBlock Text="Описание"></TextBlock>
+            <TextBox Name="TextBoxDescriptionName"
+                         Text="{Binding Path=Transaction.Description, UpdateSourceTrigger=LostFocus}" ></TextBox>
+            <Button  Command="{Binding ChangeTransactionCmd, UpdateSourceTrigger=PropertyChanged}" Content="Изменить" CommandParameter="{Binding Transactions}" Cursor="Hand"></Button>
+            <Button IsCancel="True" Background="Gray" Content="Отмена"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
