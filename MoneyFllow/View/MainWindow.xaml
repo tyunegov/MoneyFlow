@@ -43,10 +43,7 @@
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-<<<<<<< HEAD
                             <MenuItem Header="Редактировать" Command="{Binding ChangeTransaction}"></MenuItem>
-=======
->>>>>>> 66f098e038d67082c52b1e39bfa716111af3ca60
                             <MenuItem Header="Удалить" Command="{Binding DeleteTransaction}"></MenuItem>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
